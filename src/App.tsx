@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
-import { Header } from './layout/header/Header';
-import { Technology } from './layout/components/technology/Technology';
-import { Footer } from './layout/footer/Footer';
+import { Header } from './layout/components/Header/Header';
+import { NavBar } from './layout/components/NavBar/NavBar';
+import { Profile } from './layout/components/Profile/Profile';
+
 
 const App = () => {
   return (
-    <div className="App">
-     Hello, samurai! Let's go!
-     <Header />
-     <Technology />
-     <Footer />
+    <div className="app-wrapper">
+      <Header />
+      <NavBar />
+      <Profile />
     </div>
   );
 }
