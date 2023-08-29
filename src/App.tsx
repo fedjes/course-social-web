@@ -3,16 +3,21 @@ import './App.css';
 import { Header } from './layout/components/Header/Header';
 import { NavBar } from './layout/components/NavBar/NavBar';
 import { Profile } from './layout/components/Profile/Profile';
+import { styled } from 'styled-components';
 
 
 const App = () => {
   return (
-    <div className="app-wrapper">
+    <AppWrapper className="app-wrapper">
       <Header />
       <NavBar />
       <Profile />
-    </div>
+    </AppWrapper>
   );
 }
 
 export default App;
+
+const AppWrapper = styled.div`
+  
+`

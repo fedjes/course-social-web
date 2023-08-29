@@ -1,13 +1,42 @@
 import React from 'react';
+import { styled } from 'styled-components';
 
 export const NavBar = () => {
     return (
-        <nav className='navBar'>
-        <div><a href=''>Pofile</a></div>
-        <div><a href=''>Messages</a></div>
-        <div><a href=''>MainContent</a></div>
-        <div><a href=''>Music</a></div>
-        <div><a href=''>Settings</a></div>
-      </nav>
+        <StyledNavBar>
+          <NavBarItem>
+            <NavBarLink href='#'>Pofile</NavBarLink>
+          </NavBarItem>
+          <NavBarItem>
+            <NavBarLink href='#'>Messages</NavBarLink>
+          </NavBarItem>
+          <NavBarItem>
+            <NavBarLink href='#'>MainContent</NavBarLink>
+          </NavBarItem>
+          <NavBarItem>
+            <NavBarLink href='#'>Music</NavBarLink>
+          </NavBarItem>
+          <NavBarItem>
+            <NavBarLink href='#'>Settings</NavBarLink>
+          </NavBarItem>
+      </StyledNavBar>
     )
 }
+
+
+const StyledNavBar = styled.nav`
+  grid-area: n;
+  background-color: #92b935;
+`
+
+const NavBarItem = styled.div`
+  
+`
+
+const NavBarLink = styled.a`
+   text-decoration: none;
+   color: white;
+   &:active {
+    color: gold;
+   }
+`
