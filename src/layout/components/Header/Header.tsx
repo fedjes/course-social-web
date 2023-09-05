@@ -16,5 +16,5 @@ const TagHeader = styled.header`
 `
 
 const HeaderImg = styled.img`
-  width: 20px;
+  width: 60px;
 `
