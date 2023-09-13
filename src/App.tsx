@@ -18,7 +18,7 @@ const App = () => {
         <Header />
         <NavBar />
         <StyledContent>
-          <Route path='/Pofile' component={Profile} />
+          <Route path='/Profile' component={Profile} />
           <Route path='/Dialogs' component={Dialogs} />
           <Route path='/News' component={News} />
           <Route path='/Music' component={Music} />
@@ -38,5 +38,5 @@ const AppWrapper = styled.div`
 
 const StyledContent = styled.div`
   grid-area: c;
-  background-color: #32a189;
+  background-color: #32a189
 `
