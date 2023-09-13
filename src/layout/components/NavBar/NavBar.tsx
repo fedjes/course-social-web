@@ -1,23 +1,28 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
+
+type NavBarPropsType = {
+
+}
+
 export const NavBar = () => {
     return (
         <StyledNavBar>
           <NavBarItem>
-            <NavBarLink href='#'>Pofile</NavBarLink>
+            <NavBarLink href='/Pofile'>Pofile</NavBarLink>
           </NavBarItem>
           <NavBarItem>
-            <NavBarLink href='#'>Messages</NavBarLink>
+            <NavBarLink href='/Dialogs'>Messages</NavBarLink>
           </NavBarItem>
           <NavBarItem>
-            <NavBarLink href='#'>MainContent</NavBarLink>
+            <NavBarLink href='/News'>News</NavBarLink>
           </NavBarItem>
           <NavBarItem>
-            <NavBarLink href='#'>Music</NavBarLink>
+            <NavBarLink href='/Music'>Music</NavBarLink>
           </NavBarItem>
           <NavBarItem>
-            <NavBarLink href='#'>Settings</NavBarLink>
+            <NavBarLink href='/Settings'>Settings</NavBarLink>
           </NavBarItem>
       </StyledNavBar>
     )

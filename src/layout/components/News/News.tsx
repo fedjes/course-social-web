@@ -1,14 +1,14 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
-type DialogsPropsType = {
+type NewsPropsType = {
     
 }
 
-export const Dialogs = () => {
+export const News = () => {
     return (
         <div>
-            Dialogs
+            News
         </div>
     )
 }

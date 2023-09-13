@@ -1,14 +1,14 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
-type DialogsPropsType = {
+type MusicPropsType = {
     
 }
 
-export const Dialogs = () => {
+export const Music = () => {
     return (
         <div>
-            Dialogs
+            Music
         </div>
     )
 }
