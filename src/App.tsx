@@ -9,20 +9,36 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { News } from './layout/components/News/News';
 import { Music } from './layout/components/Music/Music';
 import { Settings } from './layout/components/Settings/Settings';
+import { dialogsType, dialogsMessagesDataType,  myPostDataType} from '.';
 
 
-const App = () => {
+type AppPropsType = {
+  dialogs: dialogsType[]
+  dialogsMessagesData: dialogsMessagesDataType[]
+  myPostData: myPostDataType[]
+}
+
+
+
+
+const App:React.FC<AppPropsType> = (props) => {
   return (
     <BrowserRouter>
       <AppWrapper className="app-wrapper">
         <Header />
         <NavBar />
         <StyledContent>
-          <Route path='/Profile' component={Profile} />
+          {/* <Route path='/Profile' component={Profile} />
           <Route path='/Dialogs' component={Dialogs} />
           <Route path='/News' component={News} />
           <Route path='/Music' component={Music} />
-          <Route path='/Settings' component={Settings} />
+          <Route path='/Settings' component={Settings} /> */}
+
+          <Route path='/Profile' render={() => <Profile myPostData={props.myPostData}/>} />
+          <Route path='/Dialogs' render={() => <Dialogs dialogsMessagesData={props.dialogsMessagesData} dialogs={props.dialogs}/>} />
+          <Route path='/News' render={() =>< News/>} />
+          <Route path='/Music' render={() => <Music/>} />
+          <Route path='/Settings' render={() => <Settings/>} />
         </StyledContent>
       </AppWrapper>
     </BrowserRouter>

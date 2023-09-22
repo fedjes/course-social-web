@@ -3,7 +3,8 @@ import { styled } from 'styled-components';
 
 type PostPropsType = {
     message: string
-    like: number
+    id: number
+    likesCount: number
 }
 
 export const Post: React.FC<PostPropsType> = (props) => {
@@ -11,7 +12,7 @@ export const Post: React.FC<PostPropsType> = (props) => {
         <WrapperPosts>
             <PostImg src='https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png' alt='avaUser' />
             {props.message}
-            <PostLikes>like{props.like}</PostLikes>
+            <PostLikes>like{props.likesCount}</PostLikes>
         </WrapperPosts>
 
     )

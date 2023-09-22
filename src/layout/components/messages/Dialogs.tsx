@@ -1,45 +1,43 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { DialogItemComponent } from './DialogItem/DialogItem';
+import { MessageComponents } from './Message/Message';
+import { dialogsMessagesDataType, dialogsType } from '../../..';
+
 
 type DialogsPropsType = {
-    name: string
-    id: string
+    dialogsMessagesData: dialogsMessagesDataType[]
+    dialogs: dialogsType[]
 }
 
-type MessagePropsType = {
-    content: string
-}
+export const Dialogs:React.FC<DialogsPropsType> = (props) => {
+    //dialogs 
+    // const dialogs = [
+    //     { id: 1, name: 'felis' },
+    //     { id: 2, name: 'test' },
+    //     { id: 3, name: 'fedjes' },
+    //     { id: 4, name: 'moreUser' },
+    // ]
 
-const DialogItemComponent: React.FC<DialogsPropsType> = ({ name, id }) => {
-    return (
-        <DialogItem>
-            <DialogUserName to={'/Dialogs/' + id}>{name}</DialogUserName>
-        </DialogItem>
-    )
-}
+    const dialogsElement = props.dialogs.map(d => <DialogItemComponent name={d.name} id={d.id} />)
+    //messages
+    // const dialogsMessagesData = [
+    //     { id: 1, message: 'test' },
+    //     { id: 2, message: 'test test' },
+    //     { id: 3, message: 'test test test' },
+    //     { id: 4, message: 'yo' },
+    // ]
 
-const MessageComponents: React.FC<MessagePropsType> = ({content}) => {
-    return (
-        <Message>
-            {content}
-        </Message>
-    )
-}
+    const messages = props.dialogsMessagesData.map( m => <MessageComponents content={m.message} id={m.id} />)
 
-export const Dialogs = () => {
     return (
         <StyledDialogs>
             <DialogItems>
-                <DialogItemComponent name='felis' id='1' />
-                <DialogItemComponent name='test' id='2' />
-                <DialogItemComponent name='fedjes' id='3' />
-                <DialogItemComponent name='moreUser' id='4' />
+                {dialogsElement}
             </DialogItems>
             <Messages>
-                <MessageComponents content='test'/>
-                <MessageComponents content='test test'/>
-                <MessageComponents content='test test test'/>
+                {messages}
             </Messages>
         </StyledDialogs>
     )

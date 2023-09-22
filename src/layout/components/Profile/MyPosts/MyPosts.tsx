@@ -1,11 +1,29 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { Post } from './Post/Post';
+import { myPostDataType } from '../../../..';
 
 
 
+type MyPostsPropsType = {
+  myPostData: myPostDataType[]
+}
 
-export const MyPosts = () => {
+// type myPostData = {
+//   id: number
+//   likesCount: number
+//   message: string
+// }
+
+export const MyPosts:React.FC<MyPostsPropsType> = (props) => {
+  // const myPostData = [
+  //   { id: 1, likesCount: 2, message: 'its test message ' },
+  //   { id: 2, likesCount: 5, message: 'try props ' },
+  //   { id: 3, likesCount: 1, message: 'its worked ' },
+  //   { id: 4, likesCount: 12, message: 'yo ' }
+  // ]
+
+  const myPostsElement = props.myPostData.map(mp => <Post message={mp.message} id={mp.id} likesCount={mp.likesCount} />)
   return (
     <ContentWrapperPosts>
       My post
@@ -15,9 +33,7 @@ export const MyPosts = () => {
       </ContentWrapper>
       <ContentNewPost>New Post</ContentNewPost>
       <ContentWrapper>
-        <Post message='its test message ' like={2} />
-        <Post message='try props ' like={5} />
-        <Post message='its worked ' like={1} />
+        {myPostsElement}
       </ContentWrapper>
     </ContentWrapperPosts>
   )
