@@ -2,10 +2,12 @@ import React from 'react';
 import { styled } from 'styled-components';
 import { MyPosts } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
-import { myPostDataType } from '../../..';
+import { ProfilePageType } from '../../../redux/state';
+
 
 type ProfilePropsType = {
-  myPostData: myPostDataType[]
+  state: ProfilePageType
+  addPost: (messagePost: string) => void
 }
 
 export const Profile:React.FC<ProfilePropsType> = (props) => {
@@ -18,7 +20,7 @@ export const Profile:React.FC<ProfilePropsType> = (props) => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts myPostData={props.myPostData}/>
+      <MyPosts myPostData={props.state.myPostData} addPost ={props.addPost}/>
     </div>
   )
 }

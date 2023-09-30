@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { DialogItemComponent } from './DialogItem/DialogItem';
 import { MessageComponents } from './Message/Message';
-import { dialogsMessagesDataType, dialogsType } from '../../..';
+import { messagesPageType } from '../../../redux/state';
+
 
 
 type DialogsPropsType = {
-    dialogsMessagesData: dialogsMessagesDataType[]
-    dialogs: dialogsType[]
+    state: messagesPageType
 }
 
-export const Dialogs:React.FC<DialogsPropsType> = (props) => {
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     //dialogs 
     // const dialogs = [
     //     { id: 1, name: 'felis' },
@@ -20,7 +20,7 @@ export const Dialogs:React.FC<DialogsPropsType> = (props) => {
     //     { id: 4, name: 'moreUser' },
     // ]
 
-    const dialogsElement = props.dialogs.map(d => <DialogItemComponent name={d.name} id={d.id} />)
+    const dialogsElement = props.state.dialogs.map(d => <DialogItemComponent name={d.name} id={d.id} />)
     //messages
     // const dialogsMessagesData = [
     //     { id: 1, message: 'test' },
@@ -28,10 +28,15 @@ export const Dialogs:React.FC<DialogsPropsType> = (props) => {
     //     { id: 3, message: 'test test test' },
     //     { id: 4, message: 'yo' },
     // ]
-
-    const messages = props.dialogsMessagesData.map( m => <MessageComponents content={m.message} id={m.id} />)
+    const newMessageElement = useRef<HTMLTextAreaElement>(null)
+    const addMessage = () => {
+      const messageText = newMessageElement.current?.value
+      alert(messageText)
+    }
+    const messages = props.state.dialogsMessagesData.map(m => <MessageComponents content={m.message} id={m.id} />)
 
     return (
+
         <StyledDialogs>
             <DialogItems>
                 {dialogsElement}
@@ -39,6 +44,10 @@ export const Dialogs:React.FC<DialogsPropsType> = (props) => {
             <Messages>
                 {messages}
             </Messages>
+            <div>
+                <textarea ref={newMessageElement}></textarea>
+                <button onClick={addMessage}>add mes</button>
+            </div>
         </StyledDialogs>
     )
 }

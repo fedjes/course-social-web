@@ -9,40 +9,34 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { News } from './layout/components/News/News';
 import { Music } from './layout/components/Music/Music';
 import { Settings } from './layout/components/Settings/Settings';
-import { dialogsType, dialogsMessagesDataType,  myPostDataType} from '.';
+import { StateType } from './redux/state';
+
 
 
 type AppPropsType = {
-  dialogs: dialogsType[]
-  dialogsMessagesData: dialogsMessagesDataType[]
-  myPostData: myPostDataType[]
+  state: StateType
+  addPost: (messagePost: string) => void
 }
 
 
 
 
-const App:React.FC<AppPropsType> = (props) => {
+const App: React.FC<AppPropsType> = (props) => {
+
   return (
-    <BrowserRouter>
-      <AppWrapper className="app-wrapper">
-        <Header />
-        <NavBar />
-        <StyledContent>
-          {/* <Route path='/Profile' component={Profile} />
-          <Route path='/Dialogs' component={Dialogs} />
-          <Route path='/News' component={News} />
-          <Route path='/Music' component={Music} />
-          <Route path='/Settings' component={Settings} /> */}
+    <AppWrapper className="app-wrapper">
+      <Header />
+      <NavBar />
+      <StyledContent>
+        <Route path='/Profile' render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>} />
 
-          <Route path='/Profile' render={() => <Profile myPostData={props.myPostData}/>} />
-          <Route path='/Dialogs' render={() => <Dialogs dialogsMessagesData={props.dialogsMessagesData} dialogs={props.dialogs}/>} />
-          <Route path='/News' render={() =>< News/>} />
-          <Route path='/Music' render={() => <Music/>} />
-          <Route path='/Settings' render={() => <Settings/>} />
-        </StyledContent>
-      </AppWrapper>
-    </BrowserRouter>
-
+        <Route path='/Dialogs' render={() => <Dialogs state={props.state.messagesPage} />} />
+        {/* <Route path='/Dialogs' render={() => <Dialogs dialogsMessagesData={props.state.messagesPage.dialogsMessagesData} dialogs={props.state.messagesPage.dialogs}/>} /> */}
+        <Route path='/News' render={() => < News />} />
+        <Route path='/Music' render={() => <Music />} />
+        <Route path='/Settings' render={() => <Settings />} />
+      </StyledContent>
+    </AppWrapper>
   );
 }
 
