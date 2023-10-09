@@ -1,44 +1,37 @@
-import React, { useRef } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import { styled } from 'styled-components';
 import { Post } from './Post/Post';
-import { myPostDataType } from '../../../../redux/state';
-
-
+import { MyPostDataType } from '../../../../redux/state';
 
 
 
 type MyPostsPropsType = {
-  myPostData: myPostDataType[]
-  addPost: (messagePost: string) => void
+  myPostData: MyPostDataType[]
+  addPost: () => void
+  newPostText: string
+  updateNewPost: (newPostText: string) => void
 }
 
-// type myPostData = {
-//   id: number
-//   likesCount: number
-//   message: string
-// }
+export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
-export const MyPosts:React.FC<MyPostsPropsType> = (props) => {
-
-  // const myPostData = [
-  //   { id: 1, likesCount: 2, message: 'its test message ' },
-  //   { id: 2, likesCount: 5, message: 'try props ' },
-  //   { id: 3, likesCount: 1, message: 'its worked ' },
-  //   { id: 4, likesCount: 12, message: 'yo ' }
-  // ]
   const newPostElement = useRef<HTMLTextAreaElement>(null)
   const addPostH = () => {
-    const ptostText = newPostElement.current?.value
-    if(ptostText) {
-      props.addPost(ptostText)
-    }
+    props.addPost();
   }
-  const myPostsElement = props.myPostData.map(mp => <Post message={mp.message} id={mp.id} likesCount={mp.likesCount} />)
+  const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const textFromTexArea = e.currentTarget.value;
+    props.updateNewPost(textFromTexArea);
+
+  }
+  const myPostsElement = props.myPostData.map(mp => <Post key={mp.id} message={mp.message} id={mp.id} likesCount={mp.likesCount} />)
   return (
     <ContentWrapperPosts>
       My post
       <ContentWrapper>
-        <MyPostTextarea ref={newPostElement}></MyPostTextarea>
+        <MyPostTextarea ref={newPostElement}
+          onChange={onChangeTextArea}
+          value={props.newPostText}
+        />
         <MyPostButtonAdd onClick={addPostH}>add post</MyPostButtonAdd>
       </ContentWrapper>
       <ContentNewPost>New Post</ContentNewPost>

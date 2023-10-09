@@ -15,22 +15,23 @@ import { StateType } from './redux/state';
 
 type AppPropsType = {
   state: StateType
-  addPost: (messagePost: string) => void
+  addPost: () => void
+  updateNewPost: (newPostText: string) => void
 }
 
-
-
-
-const App: React.FC<AppPropsType> = (props) => {
+const App: React.FC<AppPropsType> = ({ state, addPost, updateNewPost }) => {
 
   return (
     <AppWrapper className="app-wrapper">
       <Header />
       <NavBar />
       <StyledContent>
-        <Route path='/Profile' render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>} />
+        <Route path='/Profile' render={() => <Profile
+          state={state.profilePage}
+          addPost={addPost}
+          updateNewPost={updateNewPost} />} />
 
-        <Route path='/Dialogs' render={() => <Dialogs state={props.state.messagesPage} />} />
+        <Route path='/Dialogs' render={() => <Dialogs state={state.messagesPage} />} />
         {/* <Route path='/Dialogs' render={() => <Dialogs dialogsMessagesData={props.state.messagesPage.dialogsMessagesData} dialogs={props.state.messagesPage.dialogs}/>} /> */}
         <Route path='/News' render={() => < News />} />
         <Route path='/Music' render={() => <Music />} />

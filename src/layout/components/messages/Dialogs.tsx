@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { DialogItemComponent } from './DialogItem/DialogItem';
 import { MessageComponents } from './Message/Message';
-import { messagesPageType } from '../../../redux/state';
+import { MessagesPageType } from '../../../redux/state';
 
 
 
 type DialogsPropsType = {
-    state: messagesPageType
+    state: MessagesPageType
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
