@@ -9,17 +9,18 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { News } from './layout/components/News/News';
 import { Music } from './layout/components/Music/Music';
 import { Settings } from './layout/components/Settings/Settings';
-import { StateType } from './redux/state';
+import { StateType, store } from './redux/state';
 
 
 
 type AppPropsType = {
   state: StateType
-  addPost: () => void
-  updateNewPost: (newPostText: string) => void
+  // addPost: () => void
+  // updateNewPost: (newPostText: string) => void
+  dispatch: (action:void) => void
 }
 
-const App: React.FC<AppPropsType> = ({ state, addPost, updateNewPost }) => {
+const App: React.FC<AppPropsType> = ({ state, dispatch }) => {
 
   return (
     <AppWrapper className="app-wrapper">
@@ -28,8 +29,7 @@ const App: React.FC<AppPropsType> = ({ state, addPost, updateNewPost }) => {
       <StyledContent>
         <Route path='/Profile' render={() => <Profile
           state={state.profilePage}
-          addPost={addPost}
-          updateNewPost={updateNewPost} />} />
+          dispatch={dispatch} />} />
 
         <Route path='/Dialogs' render={() => <Dialogs state={state.messagesPage} />} />
         {/* <Route path='/Dialogs' render={() => <Dialogs dialogsMessagesData={props.state.messagesPage.dialogsMessagesData} dialogs={props.state.messagesPage.dialogs}/>} /> */}

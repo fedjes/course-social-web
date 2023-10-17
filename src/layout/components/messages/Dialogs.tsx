@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { DialogItemComponent } from './DialogItem/DialogItem';
 import { MessageComponents } from './Message/Message';
 import { MessagesPageType } from '../../../redux/state';
-
+import { store } from '../../../redux/state';
+import { sendMessageAC, updateNewMessageAC } from '../../../redux/messages-reducer';
 
 
 type DialogsPropsType = {
@@ -12,30 +13,27 @@ type DialogsPropsType = {
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
-    //dialogs 
-    // const dialogs = [
-    //     { id: 1, name: 'felis' },
-    //     { id: 2, name: 'test' },
-    //     { id: 3, name: 'fedjes' },
-    //     { id: 4, name: 'moreUser' },
-    // ]
 
     const dialogsElement = props.state.dialogs.map(d => <DialogItemComponent name={d.name} id={d.id} />)
-    //messages
-    // const dialogsMessagesData = [
-    //     { id: 1, message: 'test' },
-    //     { id: 2, message: 'test test' },
-    //     { id: 3, message: 'test test test' },
-    //     { id: 4, message: 'yo' },
-    // ]
+
     const newMessageElement = useRef<HTMLTextAreaElement>(null)
     const addMessage = () => {
-      const messageText = newMessageElement.current?.value
-      alert(messageText)
+        const messageText = newMessageElement.current?.value
+        if(messageText) {
+            store.dispatch(sendMessageAC())
+        }
     }
+
     const messages = props.state.dialogsMessagesData.map(m => <MessageComponents content={m.message} id={m.id} />)
 
+    const onChangeMessageTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        const newMessageText = e.currentTarget.value;
+        store.dispatch(updateNewMessageAC(newMessageText))
+
+    }
+
     return (
+
 
         <StyledDialogs>
             <DialogItems>
@@ -45,8 +43,13 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
                 {messages}
             </Messages>
             <div>
-                <textarea ref={newMessageElement}></textarea>
-                <button onClick={addMessage}>add mes</button>
+                <TextArea
+                    ref={newMessageElement}
+                    value={props.state.newMessageText}
+                    placeholder='enter message'
+                    onChange={onChangeMessageTextArea}
+                ></TextArea>
+                <ButtonDialogs onClick={addMessage}>add mes</ButtonDialogs>
             </div>
         </StyledDialogs>
     )
@@ -78,4 +81,11 @@ const DialogUserName = styled(NavLink)`
       &.active {
         color: red
       }
+`
+
+const TextArea = styled.textarea`
+    
+`
+const ButtonDialogs = styled.button`
+    
 `
