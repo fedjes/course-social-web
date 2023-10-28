@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { styled } from 'styled-components';
+import  styled  from 'styled-components';
 
 type DialogsPropsType = {
     name: string
@@ -27,3 +27,4 @@ const DialogUserName = styled(NavLink)`
         color: red
       }
 `
+

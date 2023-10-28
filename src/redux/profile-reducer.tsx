@@ -1,11 +1,23 @@
 import { ProfilePageType } from "./state";
 
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST = "UPDATE-NEW-POST";
+// const ADD_POST = "ADD-POST";
+// const UPDATE_NEW_POST = "UPDATE-NEW-POST";
 
-export const profileReducer = (state: ProfilePageType, action: any) => {
+const initialStateProfile: ProfilePageType = {
+    myPostData: [
+        { id: 1, likesCount: 2, message: 'its test message ' },
+        { id: 2, likesCount: 5, message: 'try props ' },
+        { id: 3, likesCount: 1, message: 'its worked ' },
+        { id: 4, likesCount: 12, message: 'yo ' }
+    ],
+    newPostText: 'test string'
+}
+
+export type ActionProfileType = changeTextAreaACType | AddPostACType
+
+export const profileReducer = (state = initialStateProfile, action: ActionProfileType):ProfilePageType => {
     switch (action.type) {
-        case ADD_POST: {
+        case "ADD-POST": {
             const newPost = {
                 id: 6,
                 likesCount: 0,
@@ -15,7 +27,7 @@ export const profileReducer = (state: ProfilePageType, action: any) => {
             state.newPostText = '';
             return state
         }
-        case UPDATE_NEW_POST: {
+        case "UPDATE-NEW-POST": {
             state.newPostText = action.textFromTexArea;
             return state
         }
@@ -26,13 +38,17 @@ export const profileReducer = (state: ProfilePageType, action: any) => {
 
 export const addPostAC = () => {
     return {
-        type: ADD_POST
+        type: "ADD-POST" as const
     }
 }
 
+type AddPostACType = ReturnType<typeof addPostAC>
+
 export const onChangeTextAreaAC = (textFromTexArea: string) => {
     return {
-        type: UPDATE_NEW_POST,
+        type: "UPDATE-NEW-POST" as const,
         textFromTexArea: textFromTexArea
     }
 }
+
+type changeTextAreaACType = ReturnType<typeof onChangeTextAreaAC>

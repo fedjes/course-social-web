@@ -2,14 +2,15 @@ import React from 'react';
 import { styled } from 'styled-components';
 import { MyPosts } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
-import { ProfilePageType } from '../../../redux/state';
+import { MyPostsContainer } from './MyPosts/MyPostsContainer';
+
 
 
 type ProfilePropsType = {
-  state: ProfilePageType
+  // state: ProfilePageType
   // addPost: () => void
   // updateNewPost: (newPostText: string) => void
-  dispatch:(action:any)=>void
+  // dispatch:(action:any)=>void
 }
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
@@ -18,11 +19,12 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts myPostData={props.state.myPostData}
-        newPostText={props.state.newPostText}
-        dispatch={props.dispatch}
-        // updateNewPost={props.updateNewPost}
-         />
+      <MyPostsContainer
+        // myPostData={props.state.myPostData}
+        // newPostText={props.state.newPostText}
+        // dispatch={props.dispatch}
+      // updateNewPost={props.updateNewPost}
+      />
     </div>
   )
 }

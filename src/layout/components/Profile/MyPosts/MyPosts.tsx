@@ -1,17 +1,22 @@
 import React, { ChangeEvent, useRef } from 'react';
 import { styled } from 'styled-components';
 import { Post } from './Post/Post';
-import { MyPostDataType } from '../../../../redux/state';
+import { MyPostDataType, ProfilePageType } from '../../../../redux/state';
 import { addPostAC, onChangeTextAreaAC } from '../../../../redux/profile-reducer';
+import { useSelector } from 'react-redux';
+import { RootStateType, store } from '../../../../redux/redux-store';
 
 
 
 type MyPostsPropsType = {
-  myPostData: MyPostDataType[]
+  // myPostData: MyPostDataType[]
   // addPost: () => void
-  newPostText: string
+  // newPostText: string
   // updateNewPost: (newPostText: string) => void
-  dispatch: (action: any) => void
+  // dispatch: (action: any) => void
+  updateNewTextAreaText: (text: string) => void
+  updateAddPost: () => void
+  posts: ProfilePageType
 }
 
 
@@ -19,28 +24,34 @@ type MyPostsPropsType = {
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
+
+
   const newPostElement = useRef<HTMLTextAreaElement>(null)
 
-  const addPostH = () => {
-    props.dispatch(addPostAC());
+  const onAddPost = () => {
+    // store.dispatch(addPostAC());
+    props.updateAddPost();
   }
 
   const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let textFromTexArea = e.currentTarget.value;
-    let action = onChangeTextAreaAC(textFromTexArea);
-    props.dispatch(action);
-
+    // let action = onChangeTextAreaAC(textFromTexArea);
+    // store.dispatch(action);
+    props.updateNewTextAreaText(textFromTexArea)
   }
-  const myPostsElement = props.myPostData.map(mp => <Post key={mp.id} message={mp.message} id={mp.id} likesCount={mp.likesCount} />)
+
+  const myPostsElement = props.posts.myPostData.map(mp => <Post key={mp.id} message={mp.message} id={mp.id} likesCount={mp.likesCount} />)
+
+
   return (
     <ContentWrapperPosts>
       My post
       <ContentWrapper>
         <MyPostTextarea ref={newPostElement}
           onChange={onChangeTextArea}
-          value={props.newPostText}
+          value={props.posts.newPostText}
         />
-        <MyPostButtonAdd onClick={addPostH}>add post</MyPostButtonAdd>
+        <MyPostButtonAdd onClick={onAddPost}>add post</MyPostButtonAdd>
       </ContentWrapper>
       <ContentNewPost>New Post</ContentNewPost>
       <ContentWrapper>

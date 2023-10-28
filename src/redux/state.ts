@@ -44,7 +44,7 @@ export type StoreType = {
 
 
 
-export let store: StoreType = {
+ let store: StoreType = {
     _State: {
         profilePage: {
             myPostData: [
