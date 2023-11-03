@@ -6,7 +6,7 @@ import { MessagesPageType } from "./state";
 // const SEND_MESSAGE = 'SEND-MESSAGE';
 
 
-const initialStateMessage:MessagesPageType = {
+const initialStateMessage: MessagesPageType = {
     dialogs: [
         { id: 1, name: 'felis' },
         { id: 2, name: 'test' },
@@ -24,17 +24,28 @@ const initialStateMessage:MessagesPageType = {
 
 export type ActionMessageType = SendMessageACType | UpdateMessageACType
 
-export const messagesReducer = (state = initialStateMessage , action:ActionMessageType):MessagesPageType => {
-    switch(action.type) {
+export const messagesReducer = (state = initialStateMessage, action: ActionMessageType): MessagesPageType => {
+    
+    
+    switch (action.type) {
+        
         case "UPDATE-NEW-MESSAGE-TEXT": {
-            state.newMessageText = action.newMessage;
-            return state;
+            return {
+                ...state,
+                newMessageText: action.newMessage
+            }
         }
         case 'SEND-MESSAGE': {
             const newText = state.newMessageText;
-            state.newMessageText = '';
-            state.dialogsMessagesData.push({ id: 6, message: newText })
-            return state;
+            return {
+                ...state,
+                newMessageText: '',
+                dialogsMessagesData: [...state.dialogsMessagesData, { id: 6, message: newText }]
+            }
+            
+            // copyState.newMessageText = '';
+            // copyState.dialogsMessagesData.push({ id: 6, message: newText })
+            
         }
         default: return state;
     }

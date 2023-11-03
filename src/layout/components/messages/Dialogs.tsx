@@ -18,7 +18,7 @@ type DialogsPropsType = {
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     // const messagePage = useSelector<RootStateType, MessagesPageType>(state => state.messagePage)
-    const dialogsElement = props.messagePageData.dialogs.map(d => <DialogItemComponent name={d.name} id={d.id} />);
+    const dialogsElement = props.messagePageData.dialogs.map(d => <DialogItemComponent key={d.id} name={d.name} id={d.id} />);
 
     const newMessageElement = useRef<HTMLTextAreaElement>(null);
 
@@ -29,7 +29,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         }  
     }
 
-    const messages = props.messagePageData.dialogsMessagesData.map(m => <MessageComponents content={m.message} id={m.id} />);
+    const messages = props.messagePageData.dialogsMessagesData.map(m => <MessageComponents key={m.id} content={m.message} id={m.id} />);
 
     const onChangeMessageTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newMessageText = e.currentTarget.value;
@@ -77,13 +77,6 @@ const Message = styled.div`
     
 `
 
-// const DialogUserName = styled(NavLink)`
-//     text-decoration: none;
-//     color: white;
-//       &.active {
-//         color: red
-//       }
-// `
 
 const TextArea = styled.textarea`
     

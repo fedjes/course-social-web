@@ -15,7 +15,7 @@ const initialStateProfile: ProfilePageType = {
 
 export type ActionProfileType = changeTextAreaACType | AddPostACType
 
-export const profileReducer = (state = initialStateProfile, action: ActionProfileType):ProfilePageType => {
+export const profileReducer = (state = initialStateProfile, action: ActionProfileType): ProfilePageType => {
     switch (action.type) {
         case "ADD-POST": {
             const newPost = {
@@ -23,13 +23,16 @@ export const profileReducer = (state = initialStateProfile, action: ActionProfil
                 likesCount: 0,
                 message: state.newPostText
             }
-            state.myPostData.push(newPost);
-            state.newPostText = '';
-            return state
+            return {
+                ...state,
+                myPostData: [...state.myPostData, newPost],
+                newPostText: ''
+            };
+
         }
         case "UPDATE-NEW-POST": {
-            state.newPostText = action.textFromTexArea;
-            return state
+           return { ...state, newPostText: action.textFromTexArea };
+         
         }
         default: return state
     }

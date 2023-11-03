@@ -26,10 +26,6 @@ const rerenderEntireTree = () => {
   );
 }
 
-rerenderEntireTree(); //store.getState()
+ rerenderEntireTree(); //store.getState()
 
-// store.subscribe(rerenderEntireTree);
-store.subscribe(() => {
-  const state = store.getState()
-  rerenderEntireTree();
-});
+
