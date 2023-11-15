@@ -10,6 +10,8 @@ import { News } from './layout/components/News/News';
 import { Music } from './layout/components/Music/Music';
 import { Settings } from './layout/components/Settings/Settings';
 import { DialogsContainer } from './layout/components/messages/DialogsContainer';
+import { Users } from './layout/components/Users/Users';
+import { UsersContainer } from './layout/components/Users/UsersContainer';
 
 
 
@@ -28,11 +30,9 @@ const App: FC<AppPropsType> = () => {
       <Header />
       <NavBar />
       <StyledContent>
-        <Route path='/Profile' render={() => <Profile
-         />} />
-
-        <Route path='/Dialogs' render={() => <DialogsContainer
-           />} />
+        <Route path='/Profile' render={() => <Profile/>} />
+        <Route path='/Dialogs' render={() => <DialogsContainer/>} />
+        <Route path='/Users' render={() => <UsersContainer />} />
 
 
         <Route path='/News' render={() => < News />} />

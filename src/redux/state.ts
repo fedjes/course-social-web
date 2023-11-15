@@ -41,10 +41,32 @@ export type StoreType = {
     dispatch: (action: any) => void
 }
 
+export type UsersType = {
+    users: usersTypeWithLocation[]
+    pageSize: number
+    userCount: number
+    currentPage: number
+}
 
+export type usersTypeWithLocation = {
+    id: number
+    name: string
+    status: string
+    folowed: boolean
+    photos: PhotoType
+    // location: locationUsersType
+}
 
+type PhotoType = {
+    small: string
+    large: string
+}
 
- let store: StoreType = {
+type locationUsersType = {
+    city: string
+    country: string
+}
+let store: StoreType = {
     _State: {
         profilePage: {
             myPostData: [
@@ -83,9 +105,9 @@ export type StoreType = {
     },
     dispatch(action: any) {
 
-      this._State.profilePage = profileReducer(this._State.profilePage ,action);
-      this._State.messagesPage = messagesReducer(this._State.messagesPage ,action);
-      this._callSubscriber();
+        this._State.profilePage = profileReducer(this._State.profilePage, action);
+        this._State.messagesPage = messagesReducer(this._State.messagesPage, action);
+        this._callSubscriber();
     }
 }
 

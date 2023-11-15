@@ -3,9 +3,9 @@ import { styled } from 'styled-components';
 import { DialogItemComponent } from './DialogItem/DialogItem';
 import { MessageComponents } from './Message/Message';
 import { MessagesPageType } from '../../../redux/state';
-import { RootStateType, store } from '../../../redux/redux-store';
+import { RootStateType, StoreDispatch, store } from '../../../redux/redux-store';
 import { sendMessageAC, updateNewMessageAC } from '../../../redux/messages-reducer';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { Dialogs } from './Dialogs';
 
 
@@ -42,16 +42,16 @@ type DialogsContainerPropsType = {
 
 
 //connect
-const mapStateToProps = () => {
+const mapStateToProps = (state: RootStateType) => {
     return {
-        messagePageData: store.getState().messagePage,
+        messagePageData: state.messagePage,
     }
 }
 
-const mapStateDispatchToProps = () => {
+const mapStateDispatchToProps = (dispatch: StoreDispatch) => {
     return {
-        updateMessageTextArea: (text: string) => { store.dispatch(updateNewMessageAC(text)) },
-        sendMessaage: () => { store.dispatch(sendMessageAC()) }
+        updateMessageTextArea: (text: string) => { dispatch(updateNewMessageAC(text)) },
+        sendMessaage: () => { dispatch(sendMessageAC()) }
     }
 }
 

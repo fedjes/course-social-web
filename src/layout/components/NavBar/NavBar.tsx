@@ -25,6 +25,9 @@ export const NavBar = () => {
       <NavBarItem>
         <NavBarLink to={'/Settings'}>Settings</NavBarLink>
       </NavBarItem>
+      <NavBarItem>
+        <NavBarLink to={'/Users'}>Users</NavBarLink>
+      </NavBarItem>
     </StyledNavBar>
   )
 }
