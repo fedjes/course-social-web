@@ -1,3 +1,4 @@
+import { GetProfileType } from "../layout/components/Profile/ProfileContainer"
 import { messagesReducer } from "./messages-reducer"
 import { profileReducer } from "./profile-reducer"
 
@@ -19,6 +20,7 @@ export type DialogsType = {
 export type ProfilePageType = {
     myPostData: MyPostDataType[]
     newPostText: string
+    profile: GetProfileType | null
 }
 
 export type MessagesPageType = {
@@ -46,18 +48,19 @@ export type UsersType = {
     pageSize: number
     userCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 export type usersTypeWithLocation = {
+    followed: boolean
     id: number
     name: string
     status: string
-    folowed: boolean
     photos: PhotoType
     // location: locationUsersType
 }
 
-type PhotoType = {
+export type PhotoType = {
     small: string
     large: string
 }
@@ -66,48 +69,48 @@ type locationUsersType = {
     city: string
     country: string
 }
-let store: StoreType = {
-    _State: {
-        profilePage: {
-            myPostData: [
-                { id: 1, likesCount: 2, message: 'its test message ' },
-                { id: 2, likesCount: 5, message: 'try props ' },
-                { id: 3, likesCount: 1, message: 'its worked ' },
-                { id: 4, likesCount: 12, message: 'yo ' }
-            ],
-            newPostText: 'test string'
-        },
-        messagesPage: {
-            dialogs: [
-                { id: 1, name: 'felis' },
-                { id: 2, name: 'test' },
-                { id: 3, name: 'fedjes' },
-                { id: 4, name: 'moreUser' },
-            ],
-            dialogsMessagesData: [
-                { id: 1, message: 'test' },
-                { id: 2, message: 'test test' },
-                { id: 3, message: 'test test test' },
-                { id: 4, message: 'yo' },
-            ],
-            newMessageText: 'its test message'
-        },
+// let store: StoreType = {
+//     _State: {
+//         profilePage: {
+//             myPostData: [
+//                 { id: 1, likesCount: 2, message: 'its test message ' },
+//                 { id: 2, likesCount: 5, message: 'try props ' },
+//                 { id: 3, likesCount: 1, message: 'its worked ' },
+//                 { id: 4, likesCount: 12, message: 'yo ' }
+//             ],
+//             newPostText: 'test string'
+//         },
+//         messagesPage: {
+//             dialogs: [
+//                 { id: 1, name: 'felis' },
+//                 { id: 2, name: 'test' },
+//                 { id: 3, name: 'fedjes' },
+//                 { id: 4, name: 'moreUser' },
+//             ],
+//             dialogsMessagesData: [
+//                 { id: 1, message: 'test' },
+//                 { id: 2, message: 'test test' },
+//                 { id: 3, message: 'test test test' },
+//                 { id: 4, message: 'yo' },
+//             ],
+//             newMessageText: 'its test message'
+//         },
 
-    },
-    getState() {
-        return this._State;
-    },
-    _callSubscriber() {
-        console.log('state changed');
-    },
-    subscribe(observer: () => void) {
-        this._callSubscriber = observer;
-    },
-    dispatch(action: any) {
+//     },
+//     getState() {
+//         return this._State;
+//     },
+//     _callSubscriber() {
+//         console.log('state changed');
+//     },
+//     subscribe(observer: () => void) {
+//         this._callSubscriber = observer;
+//     },
+//     dispatch(action: any) {
 
-        this._State.profilePage = profileReducer(this._State.profilePage, action);
-        this._State.messagesPage = messagesReducer(this._State.messagesPage, action);
-        this._callSubscriber();
-    }
-}
+//         this._State.profilePage = profileReducer(this._State.profilePage, action);
+//         this._State.messagesPage = messagesReducer(this._State.messagesPage, action);
+//         this._callSubscriber();
+//     }
+// }
 

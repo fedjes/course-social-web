@@ -8,9 +8,10 @@ import { UsersType, usersTypeWithLocation } from "./state"
 
 const initialStateProfile: UsersType = {
     users: [],
-    pageSize: 5,
+    pageSize: 10,
     userCount: 0,
-    currentPage: 5
+    currentPage: 1,
+    isFetching: false,
     // [
     //     { id: 1, photoUrl: url, folowed: false, fullName: 'fedjes kat', status: 'its test status ', location: { city: 'minsk', country: 'belarus' } },
     //     { id: 2, photoUrl: url, folowed: false, fullName: 'felis h', status: 'its test status ', location: { city: 'minsk', country: 'belarus' } },
@@ -27,15 +28,15 @@ const initialStateProfile: UsersType = {
     // ]
 }
 
-export type ActionUsersType = FollowACType | UnfolowACType | SetMoreUsersType | SetCurrentPageType | SetTotalCountType
+export type ActionUsersType = FollowACType | UnfolowACType | SetMoreUsersType | SetCurrentPageType | SetTotalCountType | SetFetchingToogleType
 
 export const usersReducer = (state = initialStateProfile, action: ActionUsersType): UsersType => {
     switch (action.type) {
         case "FOLOW-USER": {
-            return { ...state, users: state.users.map(el => el.id === action.payload.userId ? { ...el, folowed: true } : el) }
+            return { ...state, users: state.users.map(el => el.id === action.payload.userId ? { ...el, followed: true } : el) }
         }
         case "UNFOLOW-USER": {
-            return { ...state, users: state.users.map(el => el.id === action.payload.userId ? { ...el, folowed: false } : el) }
+            return { ...state, users: state.users.map(el => el.id === action.payload.userId ? { ...el, followed: false } : el) }
         }
         case "SET-MORE-USERS": {
             return { ...state, users: action.payload.users }
@@ -45,6 +46,9 @@ export const usersReducer = (state = initialStateProfile, action: ActionUsersTyp
         }
         case "SET-TOTAL-USERS-COUNT": {
             return { ...state, userCount: action.payload.totalCount }
+        }
+        case "TOOGLE-ISFETHCING": {
+            return { ...state, isFetching: action.payload.isFetching }
         }
         default: return state
     }
@@ -103,3 +107,13 @@ export const setUsersCountAC = (totalCount: number) => {
     }
 }
 type SetTotalCountType = ReturnType<typeof setUsersCountAC>
+
+export const toogleFetchingAC = (isFetching: boolean) => {
+    return {
+        type: "TOOGLE-ISFETHCING" as const,
+        payload: {
+            isFetching
+        }
+    }
+}
+type SetFetchingToogleType = ReturnType<typeof toogleFetchingAC>

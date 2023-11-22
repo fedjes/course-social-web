@@ -1,3 +1,4 @@
+import { GetProfileType } from "../layout/components/Profile/ProfileContainer";
 import { ProfilePageType } from "./state";
 
 // const ADD_POST = "ADD-POST";
@@ -10,10 +11,11 @@ const initialStateProfile: ProfilePageType = {
         { id: 3, likesCount: 1, message: 'its worked ' },
         { id: 4, likesCount: 12, message: 'yo ' }
     ],
-    newPostText: 'test string'
+    newPostText: 'test string',
+    profile: null
 }
 
-export type ActionProfileType = changeTextAreaACType | AddPostACType
+export type ActionProfileType = changeTextAreaACType | AddPostACType | setUserProfileACType
 
 export const profileReducer = (state = initialStateProfile, action: ActionProfileType): ProfilePageType => {
     switch (action.type) {
@@ -32,6 +34,10 @@ export const profileReducer = (state = initialStateProfile, action: ActionProfil
         }
         case "UPDATE-NEW-POST": {
            return { ...state, newPostText: action.textFromTexArea };
+         
+        }
+        case "SET-USER-PROFILE": {
+           return { ...state, profile: action.profile };
          
         }
         default: return state
@@ -53,5 +59,15 @@ export const onChangeTextAreaAC = (textFromTexArea: string) => {
         textFromTexArea: textFromTexArea
     }
 }
-
 type changeTextAreaACType = ReturnType<typeof onChangeTextAreaAC>
+
+
+
+
+export const setUsersProfileAC = (profile: GetProfileType) => {
+    return {
+        type: "SET-USER-PROFILE" as const,
+        profile
+    }
+}
+type setUserProfileACType = ReturnType<typeof setUsersProfileAC>

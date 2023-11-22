@@ -10,8 +10,11 @@ import { News } from './layout/components/News/News';
 import { Music } from './layout/components/Music/Music';
 import { Settings } from './layout/components/Settings/Settings';
 import { DialogsContainer } from './layout/components/messages/DialogsContainer';
-import { Users } from './layout/components/Users/Users';
+
 import { UsersContainer } from './layout/components/Users/UsersContainer';
+import ProfileContainer from './layout/components/Profile/ProfileContainer';
+import HeaderContainer from './layout/components/Header/HeaderContainer';
+
 
 
 
@@ -26,11 +29,13 @@ type AppPropsType = {
 const App: FC<AppPropsType> = () => {
 
   return (
+    
     <AppWrapper className="app-wrapper">
-      <Header />
+      <HeaderContainer />
       <NavBar />
       <StyledContent>
-        <Route path='/Profile' render={() => <Profile/>} />
+        <Route path='/Profile/:userId?' render={() => <ProfileContainer/>} />
+        {/* <Route path='/Profile' render={() => <Profile/>} /> */}
         <Route path='/Dialogs' render={() => <DialogsContainer/>} />
         <Route path='/Users' render={() => <UsersContainer />} />
 

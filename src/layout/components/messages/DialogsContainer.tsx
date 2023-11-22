@@ -48,11 +48,14 @@ const mapStateToProps = (state: RootStateType) => {
     }
 }
 
-const mapStateDispatchToProps = (dispatch: StoreDispatch) => {
-    return {
-        updateMessageTextArea: (text: string) => { dispatch(updateNewMessageAC(text)) },
-        sendMessaage: () => { dispatch(sendMessageAC()) }
-    }
-}
+// const mapStateDispatchToProps = (dispatch: StoreDispatch) => {
+//     return {
+//         updateMessageTextArea: (text: string) => { dispatch(updateNewMessageAC(text)) },
+//         sendMessaage: () => { dispatch(sendMessageAC()) }
+//     }
+// }
 
-export const DialogsContainer = connect(mapStateToProps, mapStateDispatchToProps)(Dialogs);
+export const DialogsContainer = connect(mapStateToProps, {
+    updateMessageTextArea: updateNewMessageAC,
+    sendMessaage: sendMessageAC,
+})(Dialogs);

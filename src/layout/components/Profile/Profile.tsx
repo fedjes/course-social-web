@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { MyPosts } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
+import { ProfileContainerType } from './ProfileContainer';
 
 
 
@@ -11,20 +12,16 @@ type ProfilePropsType = {
   // addPost: () => void
   // updateNewPost: (newPostText: string) => void
   // dispatch:(action:any)=>void
+  
 }
 
-export const Profile: React.FC<ProfilePropsType> = (props) => {
+export const Profile: React.FC<ProfileContainerType> = (props) => {
 
-
+  
   return (
     <div>
-      <ProfileInfo />
-      <MyPostsContainer
-        // myPostData={props.state.myPostData}
-        // newPostText={props.state.newPostText}
-        // dispatch={props.dispatch}
-      // updateNewPost={props.updateNewPost}
-      />
+      <ProfileInfo profile={props.profile}/>
+      <MyPostsContainer/>
     </div>
   )
 }
