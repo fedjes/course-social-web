@@ -1,11 +1,12 @@
 import React from 'react'
 import { Profile } from './Profile'
-import axios from 'axios'
 import { RootStateType } from '../../../redux/redux-store'
-import { setUsersProfileAC } from '../../../redux/profile-reducer'
 import { connect } from 'react-redux'
 import { PhotoType } from '../../../redux/state'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import {  RouteComponentProps, withRouter } from 'react-router-dom'
+import { getUserProfileTC } from '../../../redux/profile-reducer'
+import { withAuthRedirect } from '../../../hoc/withAuthRedirect'
+
 
 
 type ContactType = {
@@ -30,8 +31,10 @@ export type GetProfileType = {
 }
 
 export type ProfileContainerType = {
-    setUsersProfile: (profile: GetProfileType) => void
+    // setUsersProfile: (profile: GetProfileType) => void
+    getUserProfileTC: (userId: string) => void
     profile: GetProfileType | null
+    // isAuth: boolean | null
 }
 
 
@@ -43,12 +46,11 @@ class ProfileContainer extends React.Component<ProfileContainerType & RouteCompo
         if (!userIdNew) {
             userIdNew = '2'
         }
-        console.log(userIdNew);
-        
-        axios.get<GetProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${userIdNew}`)
-            .then(response => {
-                this.props.setUsersProfile(response.data)
-            })
+        this.props.getUserProfileTC(userIdNew)
+        // userApi.getProfile(userIdNew)
+        //     .then(response => {
+        //         this.props.setUsersProfile(response.data)
+        //     })
     }
     render() {
         return (
@@ -58,13 +60,16 @@ class ProfileContainer extends React.Component<ProfileContainerType & RouteCompo
 
 }
 
+let authRedirectComponent = withAuthRedirect(ProfileContainer);
+
 let mapStateToProps = (state: RootStateType) => ({
     profile: state.profilePage.profile
 })
 
 
-const WithRouterProfileContainer = withRouter(ProfileContainer)
+const WithRouterProfileContainer = withRouter<ProfileContainerType & RouteComponentProps<{ userId: string }>,any>(authRedirectComponent)
 
 export default connect(mapStateToProps, {
-    setUsersProfile: setUsersProfileAC,
+    // setUsersProfile: setUsersProfileAC,
+    getUserProfileTC
 })(WithRouterProfileContainer);

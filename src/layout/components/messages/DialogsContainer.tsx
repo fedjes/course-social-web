@@ -6,7 +6,9 @@ import { MessagesPageType } from '../../../redux/state';
 import { RootStateType, StoreDispatch, store } from '../../../redux/redux-store';
 import { sendMessageAC, updateNewMessageAC } from '../../../redux/messages-reducer';
 import { connect } from 'react-redux';
-import { Dialogs } from './Dialogs';
+import { Dialogs, DialogsPropsType } from './Dialogs';
+import { Redirect } from 'react-router-dom';
+import { withAuthRedirect } from '../../../hoc/withAuthRedirect';
 
 
 
@@ -48,14 +50,23 @@ const mapStateToProps = (state: RootStateType) => {
     }
 }
 
+
+
 // const mapStateDispatchToProps = (dispatch: StoreDispatch) => {
 //     return {
 //         updateMessageTextArea: (text: string) => { dispatch(updateNewMessageAC(text)) },
 //         sendMessaage: () => { dispatch(sendMessageAC()) }
 //     }
 // }
+const authRedirectComponent = withAuthRedirect(Dialogs)
+// const authRedirectComponent = (props:DialogsPropsType) => {
+//     if(props.isAuth === false) {
+//         return <Redirect to={'/Login'} />
+//     }
+//     return <Dialogs {...props}/>
+// }
 
 export const DialogsContainer = connect(mapStateToProps, {
     updateMessageTextArea: updateNewMessageAC,
     sendMessaage: sendMessageAC,
-})(Dialogs);
+})(authRedirectComponent);

@@ -49,6 +49,7 @@ export type UsersType = {
     userCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: number[]
 }
 
 export type usersTypeWithLocation = {

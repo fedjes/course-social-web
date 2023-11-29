@@ -1,5 +1,7 @@
+import { userApi } from "../api/api";
 import { GetProfileType } from "../layout/components/Profile/ProfileContainer";
 import { ProfilePageType } from "./state";
+import { Dispatch } from 'redux';
 
 // const ADD_POST = "ADD-POST";
 // const UPDATE_NEW_POST = "UPDATE-NEW-POST";
@@ -33,12 +35,12 @@ export const profileReducer = (state = initialStateProfile, action: ActionProfil
 
         }
         case "UPDATE-NEW-POST": {
-           return { ...state, newPostText: action.textFromTexArea };
-         
+            return { ...state, newPostText: action.textFromTexArea };
+
         }
         case "SET-USER-PROFILE": {
-           return { ...state, profile: action.profile };
-         
+            return { ...state, profile: action.profile };
+
         }
         default: return state
     }
@@ -71,3 +73,11 @@ export const setUsersProfileAC = (profile: GetProfileType) => {
     }
 }
 type setUserProfileACType = ReturnType<typeof setUsersProfileAC>
+
+
+export const getUserProfileTC = (userId: string) => (dispatch: Dispatch) => {
+    userApi.getProfile(userId)
+        .then(response => {
+            dispatch(setUsersProfileAC(response.data))
+        })
+}

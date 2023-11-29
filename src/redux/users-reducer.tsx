@@ -3,6 +3,8 @@
 
 import React from 'react'
 import { UsersType, usersTypeWithLocation } from "./state"
+import { Dispatch } from 'redux'
+import { userApi } from '../api/api'
 
 // const url ="../../../../thumb-1983.jpg"
 
@@ -12,6 +14,7 @@ const initialStateProfile: UsersType = {
     userCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingInProgress: [],
     // [
     //     { id: 1, photoUrl: url, folowed: false, fullName: 'fedjes kat', status: 'its test status ', location: { city: 'minsk', country: 'belarus' } },
     //     { id: 2, photoUrl: url, folowed: false, fullName: 'felis h', status: 'its test status ', location: { city: 'minsk', country: 'belarus' } },
@@ -28,7 +31,13 @@ const initialStateProfile: UsersType = {
     // ]
 }
 
-export type ActionUsersType = FollowACType | UnfolowACType | SetMoreUsersType | SetCurrentPageType | SetTotalCountType | SetFetchingToogleType
+export type ActionUsersType = FollowACType
+    | UnfolowACType
+    | SetMoreUsersType
+    | SetCurrentPageType
+    | SetTotalCountType
+    | SetFetchingToogleType
+    | SetFollowingProgressType
 
 export const usersReducer = (state = initialStateProfile, action: ActionUsersType): UsersType => {
     switch (action.type) {
@@ -49,6 +58,13 @@ export const usersReducer = (state = initialStateProfile, action: ActionUsersTyp
         }
         case "TOOGLE-ISFETHCING": {
             return { ...state, isFetching: action.payload.isFetching }
+        }
+        case "TOOGLE-IS-FOLLOWING-PROGRESS": {
+            return {
+                ...state, followingInProgress: action.payload.isFollowing
+                    ? [...state.followingInProgress, action.payload.userId]
+                    : state.followingInProgress.filter(el => el !== action.payload.userId)
+            }
         }
         default: return state
     }
@@ -117,3 +133,49 @@ export const toogleFetchingAC = (isFetching: boolean) => {
     }
 }
 type SetFetchingToogleType = ReturnType<typeof toogleFetchingAC>
+
+export const toogleIsFollowingProgressAC = (userId: number, isFollowing: boolean) => {
+    return {
+        type: "TOOGLE-IS-FOLLOWING-PROGRESS" as const,
+        payload: {
+            isFollowing,
+            userId
+        }
+    }
+}
+type SetFollowingProgressType = ReturnType<typeof toogleIsFollowingProgressAC>
+
+//thunk
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(toogleFetchingAC(true))
+    userApi.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(toogleFetchingAC(false))
+            dispatch(setMoreUsersAC(data.items))
+            dispatch(setUsersCountAC(data.totalCount))
+        })
+}
+
+export const followTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(toogleIsFollowingProgressAC(userId, true))
+    userApi.follow(userId)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(folowAC(userId))
+            }
+            dispatch(toogleIsFollowingProgressAC(userId, false))
+            // dispatch(toogleFetchingAC(true))
+        })
+}
+
+export const unfollowTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(toogleIsFollowingProgressAC(userId, true))
+    userApi.unfollow(userId)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unfolowAC(userId))
+            }
+            dispatch(toogleIsFollowingProgressAC(userId, false))
+            // dispatch(toogleFetchingAC(true))
+        })
+}

@@ -4,6 +4,8 @@ import userAva from '../../assets/images/users-vector-icon-png_260862.jpg'
 import { usersTypeWithLocation } from '../../../redux/state'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
+import { userApi } from '../../../api/api'
+// import { followTC, unfollowTC } from '../../../redux/users-reducer'
 
 type UsersCleanePropsType = {
     currentPage: number
@@ -13,11 +15,12 @@ type UsersCleanePropsType = {
     pageSize: number
     userCount: number
     onPageHandler: (el: number) => void
-
+    toogleFollowing: (userId: number, isFollowing: boolean) => void
+    followingInProgress: number[]
 }
 
 export const UsersCleane: FC<UsersCleanePropsType> = ({
-    currentPage, users, unfollow, follow, pageSize, userCount, onPageHandler
+    currentPage, users, unfollow, follow, pageSize, userCount, onPageHandler, toogleFollowing, followingInProgress
 }) => {
 
     const pagesCount = Math.ceil(userCount / pageSize);
@@ -44,25 +47,11 @@ export const UsersCleane: FC<UsersCleanePropsType> = ({
                         </div>
                         <div>
                             {el.followed
-                                ? <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`,  
-                                    { withCredentials: true, headers: { "API-KEY": "5f160901-a2cd-44d6-9b0d-6d132ba4437d" } })
-                                        .then(response => {
-                                            debugger
-                                            if (response.data.resultCode === 0) {
-                                                unfollow(el.id)
-                                            }
-                                        })
+                                ? <button disabled={followingInProgress.some(id=> id === el.id)} onClick={() => {
+                                    unfollow(el.id)
                                 }}>отписаться</button>
-                                : <button onClick={() => {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`, {}, 
-                                    { withCredentials: true, headers: { "API-KEY": "5f160901-a2cd-44d6-9b0d-6d132ba4437d" } })
-                                        .then(response => {
-                                            debugger
-                                             if (response.data.resultCode === 0) {
-                                                follow(el.id)
-                                             }
-                                        })
+                                : <button disabled={followingInProgress.some(id=> id === el.id)} onClick={() => {
+                                    follow(el.id)
                                 }}>подписаться</button>}
                         </div>
                     </span>

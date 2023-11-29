@@ -1,53 +1,42 @@
 import React from 'react'
 import { connect } from 'react-redux';
 
-import { folowAC, unfolowAC, setMoreUsersAC, setCurrentPageAC, setUsersCountAC, toogleFetchingAC } from '../../../redux/users-reducer';
+import { folowAC, unfolowAC, setMoreUsersAC, setCurrentPageAC, setUsersCountAC, toogleFetchingAC, toogleIsFollowingProgressAC, getUsersTC, unfollowTC, followTC } from '../../../redux/users-reducer';
 import { usersTypeWithLocation } from '../../../redux/state';
 import { RootStateType, StoreDispatch, store } from '../../../redux/redux-store';
 
 import { UsersCleane } from './UsersCleane';
 import styled, { keyframes } from 'styled-components';
-import {userApi } from '../../../api/api';
+import { userApi } from '../../../api/api';
 
 
 type UsersPageType = {
     unfollow: (userId: number) => void
     follow: (userId: number) => void
-    setUsersAll: (users: usersTypeWithLocation[]) => void
     setCurrentPage: (currentPage: number) => void
-    setUsersCount: (totalCount: number) => void
     users: usersTypeWithLocation[]
     userCount: number
     pageSize: number
     currentPage: number
     isFetching: boolean
-    toogleFetching: (isFetching: boolean) => void
+    toogleFollowing: (userId: number, isFollowing: boolean) => void
+    followingInProgress: number[]
+    getUsersTC: (currentPage: number, pageSize: number) => void
+    followTC: (userId: number) => void
+    unfollowTC: (userId: number) => void
 }
 
 class UsserContainer extends React.Component<UsersPageType> {
     componentDidMount() {
-        this.props.toogleFetching(true)
-        userApi.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                debugger
-                this.props.toogleFetching(false)
-                this.props.setUsersAll(data.items)
-                this.props.setUsersCount(data.totalCount)
-            })
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
     }
     onPageHandler = (el: number) => {
-        this.props.setCurrentPage(el);
-        this.props.toogleFetching(true);
-        userApi.getUsers(el, this.props.pageSize)
-            .then(data => {
-                this.props.toogleFetching(false)
-                this.props.setUsersAll(data.items)
-            })
+        this.props.getUsersTC(el, this.props.pageSize)
     }
 
     render() {
-        const { users, unfollow, follow, userCount, pageSize, currentPage, isFetching } = this.props;
-       
+        const { users, unfollow, follow, userCount, pageSize, currentPage, isFetching, toogleFollowing, followingInProgress, followTC, unfollowTC } = this.props;
+
         return (
             <>
                 {isFetching ? <Loader /> : null}
@@ -55,9 +44,12 @@ class UsserContainer extends React.Component<UsersPageType> {
                     userCount={userCount}
                     pageSize={pageSize}
                     currentPage={currentPage}
-                    follow={follow}
-                    unfollow={unfollow}
+                    follow={followTC}
+                    unfollow={unfollowTC}
                     onPageHandler={this.onPageHandler}
+                    toogleFollowing={toogleFollowing}
+                    followingInProgress={followingInProgress}
+                    
                 />
             </>
         )
@@ -73,8 +65,9 @@ const mapStateToProps = (state: RootStateType) => {
         pageSize: state.usersPage.pageSize,
         userCount: state.usersPage.userCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
-        
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
+
     }
 }
 
@@ -89,13 +82,17 @@ const mapStateToProps = (state: RootStateType) => {
 //     }
 // }
 
-export const UsersContainer = connect(mapStateToProps,{
+export const UsersContainer = connect(mapStateToProps, {
     follow: folowAC,
     unfollow: unfolowAC,
-    setUsersAll: setMoreUsersAC,
+    // setUsersAll: setMoreUsersAC,
     setCurrentPage: setCurrentPageAC,
-    setUsersCount: setUsersCountAC,
-    toogleFetching: toogleFetchingAC,
+    // setUsersCount: setUsersCountAC,
+    // toogleFetching: toogleFetchingAC,
+    toogleFollowing: toogleIsFollowingProgressAC,
+    unfollowTC,
+    followTC,
+    getUsersTC
 })(UsserContainer);   //Users
 
 

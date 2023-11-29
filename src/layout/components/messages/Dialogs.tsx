@@ -6,14 +6,16 @@ import { MessagesPageType } from '../../../redux/state';
 import { RootStateType, store } from '../../../redux/redux-store';
 import { sendMessageAC, updateNewMessageAC } from '../../../redux/messages-reducer';
 import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 
-type DialogsPropsType = {
+export type DialogsPropsType = {
     // state: MessagesPageType
     // dispatch:(action:any)=>void
     updateMessageTextArea: (text: string) => void
     sendMessaage: () => void
     messagePageData: MessagesPageType
+    // isAuth: boolean | null
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -35,7 +37,9 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         const newMessageText = e.currentTarget.value;
         props.updateMessageTextArea(newMessageText);
     }
-
+    // if(props.isAuth === false) {
+    //     return <Redirect to={'/Login'}/>
+    // }
     return (
         <StyledDialogs>
             <DialogItems>

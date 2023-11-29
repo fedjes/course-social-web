@@ -3,15 +3,24 @@
 
 import React from 'react'
 import { UsersType, usersTypeWithLocation } from "./state"
+import { Dispatch } from 'redux';
+import { authApi } from '../api/api';
 
 // const url ="../../../../thumb-1983.jpg"
+export type ResponseAuthType = {
+    data: AuthPropsType
+    resultCode: number
+    messages: string[]
+}
+
+
 
 
 export type AuthPropsType = {
     id: number | null
     email: string | null
     login: string | null
-    isAuth: boolean | null
+    isAuth: boolean
 }
 
 const initialStateAuth: AuthPropsType = {
@@ -53,5 +62,13 @@ export const setAuthUserDataAC = (data:AuthPropsType) => {
 type SetUserData = ReturnType<typeof setAuthUserDataAC>
 
 
-
+export const getAuthUserDataTC = () => (dispatch:Dispatch) => {
+    
+    authApi.getMe()
+    .then(response => {
+       if (response.data.resultCode === 0) {
+        dispatch(setAuthUserDataAC(response.data.data))
+    }
+    })
+}
 

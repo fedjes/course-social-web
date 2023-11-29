@@ -14,6 +14,7 @@ import { DialogsContainer } from './layout/components/messages/DialogsContainer'
 import { UsersContainer } from './layout/components/Users/UsersContainer';
 import ProfileContainer from './layout/components/Profile/ProfileContainer';
 import HeaderContainer from './layout/components/Header/HeaderContainer';
+import { Login } from './layout/components/Login/Login';
 
 
 
@@ -41,6 +42,7 @@ const App: FC<AppPropsType> = () => {
 
 
         <Route path='/News' render={() => < News />} />
+        <Route path='/Login' render={() => < Login />} />
         <Route path='/Music' render={() => <Music />} />
         <Route path='/Settings' render={() => <Settings />} />
       </StyledContent>
