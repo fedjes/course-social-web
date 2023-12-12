@@ -4,7 +4,7 @@ import { profileReducer } from './profile-reducer';
 import { usersReducer } from './users-reducer';
 import { authReducer } from './auth-reducer';
 
-import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
+import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const RootReducer = combineReducers({
@@ -20,8 +20,8 @@ export type RootStateType = ReturnType<typeof RootReducer>
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof RootReducer>
 // создаем тип диспатча который принимает как AC так и TC
-export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
-
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AnyAction>
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 

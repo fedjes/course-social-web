@@ -1,4 +1,4 @@
-import { userApi } from "../api/api";
+import { profileApi, userApi } from "../api/api";
 import { GetProfileType } from "../layout/components/Profile/ProfileContainer";
 import { ProfilePageType } from "./state";
 import { Dispatch } from 'redux';
@@ -14,10 +14,11 @@ const initialStateProfile: ProfilePageType = {
         { id: 4, likesCount: 12, message: 'yo ' }
     ],
     newPostText: 'test string',
-    profile: null
+    profile: null,
+    status: ''
 }
 
-export type ActionProfileType = changeTextAreaACType | AddPostACType | setUserProfileACType
+export type ActionProfileType = changeTextAreaACType | AddPostACType | setUserProfileACType | setStatusACType
 
 export const profileReducer = (state = initialStateProfile, action: ActionProfileType): ProfilePageType => {
     switch (action.type) {
@@ -36,6 +37,10 @@ export const profileReducer = (state = initialStateProfile, action: ActionProfil
         }
         case "UPDATE-NEW-POST": {
             return { ...state, newPostText: action.textFromTexArea };
+
+        }
+        case "SET-STATUS": {
+            return { ...state, status: action.status };
 
         }
         case "SET-USER-PROFILE": {
@@ -62,6 +67,13 @@ export const onChangeTextAreaAC = (textFromTexArea: string) => {
     }
 }
 type changeTextAreaACType = ReturnType<typeof onChangeTextAreaAC>
+export const setStatusAC = (status: string) => {
+    return {
+        type: "SET-STATUS" as const,
+        status: status
+    }
+}
+type setStatusACType = ReturnType<typeof setStatusAC>
 
 
 
@@ -79,5 +91,21 @@ export const getUserProfileTC = (userId: string) => (dispatch: Dispatch) => {
     userApi.getProfile(userId)
         .then(response => {
             dispatch(setUsersProfileAC(response.data))
+        })
+}
+
+export const getStatusTC = (userId: string) => (dispatch: Dispatch) => {
+    profileApi.getStatus(userId)
+        .then(response => {
+            dispatch(setStatusAC(response.data))
+        })
+}
+export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
+    profileApi.updateStstus(status)
+        .then(response => {
+            if(response.data.resultCode === 0) {
+                console.log(response);
+                dispatch(setStatusAC(status))
+            }
         })
 }

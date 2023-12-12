@@ -3,11 +3,18 @@ import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { HeaderContainerType } from './HeaderContainer';
 
+import { useAppDispatch, useAppSelector } from '../../../redux/redux-store';
+
 
 
 
 export const Header: React.FC<HeaderContainerType> = (props) => {
-  
+
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(state => state.auth.isAuth)
+  const userLogin = useAppSelector(state => state.auth.login)
+ 
+
   return (
     <TagHeader >
 
@@ -15,7 +22,15 @@ export const Header: React.FC<HeaderContainerType> = (props) => {
 
       <LoginBlock>
 
-        <h2>{props.data.isAuth ? props.data.login : <NavLink to={'/Login'}>Login</NavLink>}</h2>
+        {/* <h2>{props.data.isAuth ?  <div>{props.data.login} <NavLink onClick={dispathcHandler} to={'/Login'}>LogOut</NavLink></div> : <NavLink to={'/Login'}>Login</NavLink> }</h2> */}
+        {isLoggedIn
+          ?
+          <div style={{ display: "flex", gap: "10px" }}>
+            <p >{userLogin} </p>
+            <p style={{ cursor: "pointer" }} onClick={props.LogOutTC}>Logout</p>
+          </div>
+          : <NavLink to={"/login"}>LOGIN</NavLink>
+        }
       </LoginBlock>
 
 

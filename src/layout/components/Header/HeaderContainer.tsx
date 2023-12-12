@@ -5,7 +5,7 @@ import { Header } from "./Header"
 import axios from "axios"
 
 import { RootStateType } from "../../../redux/redux-store"
-import { AuthPropsType, getAuthUserDataTC, setAuthUserDataAC } from "../../../redux/auth-reducer"
+import { AuthPropsType, LogOutTC, getAuthUserDataTC, setAuthUserDataAC } from "../../../redux/auth-reducer"
 import { connect } from "react-redux"
 import { authApi } from "../../../api/api"
 
@@ -13,7 +13,7 @@ import { authApi } from "../../../api/api"
 export type HeaderContainerType = {
     data: AuthPropsType
     getAuthUserDataTC: () => void
-
+    LogOutTC: () => void
 }
 
 
@@ -44,4 +44,4 @@ let mapStateToProps = (state: RootStateType) => {
 }
 
 
-export default connect(mapStateToProps, { getAuthUserDataTC })(HeaderContainer)
+export default connect(mapStateToProps, { getAuthUserDataTC, LogOutTC })(HeaderContainer)

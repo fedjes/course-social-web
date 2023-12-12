@@ -5,16 +5,18 @@ import { NavBar } from './layout/components/NavBar/NavBar';
 import { Profile } from './layout/components/Profile/Profile';
 import { styled } from 'styled-components';
 
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { News } from './layout/components/News/News';
 import { Music } from './layout/components/Music/Music';
 import { Settings } from './layout/components/Settings/Settings';
-import { DialogsContainer } from './layout/components/messages/DialogsContainer';
+// import { DialogsContainer } from './layout/components/messages/DialogsContainer';
 
-import { UsersContainer } from './layout/components/Users/UsersContainer';
+// import { UsersContainer } from './layout/components/Users/UsersContainer';
 import ProfileContainer from './layout/components/Profile/ProfileContainer';
 import HeaderContainer from './layout/components/Header/HeaderContainer';
 import { Login } from './layout/components/Login/Login';
+import UsersContainer from './layout/components/Users/UsersContainer';
+import DialogsContainer from './layout/components/messages/DialogsContainer';
 
 
 
@@ -35,6 +37,7 @@ const App: FC<AppPropsType> = () => {
       <HeaderContainer />
       <NavBar />
       <StyledContent>
+        {/* <Switch> */}
         <Route path='/Profile/:userId?' render={() => <ProfileContainer/>} />
         {/* <Route path='/Profile' render={() => <Profile/>} /> */}
         <Route path='/Dialogs' render={() => <DialogsContainer/>} />
@@ -45,6 +48,7 @@ const App: FC<AppPropsType> = () => {
         <Route path='/Login' render={() => < Login />} />
         <Route path='/Music' render={() => <Music />} />
         <Route path='/Settings' render={() => <Settings />} />
+        {/* </Switch> */}
       </StyledContent>
     </AppWrapper>
 

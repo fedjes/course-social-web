@@ -8,6 +8,7 @@ import { RootStateType, StoreDispatch, store } from '../../../redux/redux-store'
 import { UsersCleane } from './UsersCleane';
 import styled, { keyframes } from 'styled-components';
 import { userApi } from '../../../api/api';
+import { compose } from 'redux';
 
 
 type UsersPageType = {
@@ -82,18 +83,33 @@ const mapStateToProps = (state: RootStateType) => {
 //     }
 // }
 
-export const UsersContainer = connect(mapStateToProps, {
-    follow: folowAC,
-    unfollow: unfolowAC,
-    // setUsersAll: setMoreUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    // setUsersCount: setUsersCountAC,
-    // toogleFetching: toogleFetchingAC,
-    toogleFollowing: toogleIsFollowingProgressAC,
-    unfollowTC,
-    followTC,
-    getUsersTC
-})(UsserContainer);   //Users
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        follow: folowAC,
+        unfollow: unfolowAC,
+        // setUsersAll: setMoreUsersAC,
+        setCurrentPage: setCurrentPageAC,
+        // setUsersCount: setUsersCountAC,
+        // toogleFetching: toogleFetchingAC,
+        toogleFollowing: toogleIsFollowingProgressAC,
+        unfollowTC,
+        followTC,
+        getUsersTC
+    })
+)(UsserContainer);
+
+// export const UsersContainer = connect(mapStateToProps, {
+//     follow: folowAC,
+//     unfollow: unfolowAC,
+//     // setUsersAll: setMoreUsersAC,
+//     setCurrentPage: setCurrentPageAC,
+//     // setUsersCount: setUsersCountAC,
+//     // toogleFetching: toogleFetchingAC,
+//     toogleFollowing: toogleIsFollowingProgressAC,
+//     unfollowTC,
+//     followTC,
+//     getUsersTC
+// })(UsserContainer);   //Users
 
 
 export const rotate360 = keyframes`

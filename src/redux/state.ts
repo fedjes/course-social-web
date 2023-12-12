@@ -21,6 +21,7 @@ export type ProfilePageType = {
     myPostData: MyPostDataType[]
     newPostText: string
     profile: GetProfileType | null
+    status: string
 }
 
 export type MessagesPageType = {

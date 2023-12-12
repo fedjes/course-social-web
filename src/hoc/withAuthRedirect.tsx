@@ -14,7 +14,12 @@ type withAuthRedirectPropsType = {
 }
 export const withAuthRedirect=(Component: any) => {
     class RedirectComponent extends React.Component<withAuthRedirectPropsType> {
+        
+        
         render() {
+            debugger
+            console.log(this.props.isAuth);
+            
             // const { isAuth, ...rest } = this.props;
 
             // if (!isAuth) {

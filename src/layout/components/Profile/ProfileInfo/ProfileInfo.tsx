@@ -2,13 +2,16 @@ import React from 'react';
 import { styled } from 'styled-components';
 import { GetProfileType } from '../ProfileContainer';
 import { Loader } from '../../Users/UsersContainer';
+import { ProfileStatus } from './ProfileStatus';
 
 
 type ProfileInfoPropsType = {
   profile: GetProfileType | null
+  status: string
+  updateStatus: (status: string)=>void
 }
 
-export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({ profile }) => {
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({ profile, status, updateStatus }) => {
   if(!profile) {
     return (
       <Loader />
@@ -21,6 +24,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({ profile }) => {
       </ContentWrapper>
       <AvaDiscription>
         <img src={profile?.photos.large} alt="largePhoto" />
+        <ProfileStatus status={status} updateStatus={updateStatus}/>
         <div>
           {profile?.aboutMe}
         </div>

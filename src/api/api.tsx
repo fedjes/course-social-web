@@ -2,6 +2,7 @@ import axios from "axios";
 import { GetProfileType } from "../layout/components/Profile/ProfileContainer";
 import { HeaderContainerType } from "../layout/components/Header/HeaderContainer";
 import { ResponseAuthType } from "../redux/auth-reducer";
+import { LoginType } from "../layout/components/Login/Login";
 
 
 const innstance = axios.create({
@@ -24,13 +25,46 @@ export const userApi = {
     follow(userId: number) {
         return innstance.post(`follow/${userId}`).then(response => response.data)
     },
-    getProfile(userIdNew:string) {
-       return innstance.get<GetProfileType>(`profile/${userIdNew}`)
+    getProfile(userIdNew: string) {
+        console.warn('fix method to profileApi')
+        return profileApi.getProfile(userIdNew)
     }
-} 
+}
+
+
+type UpdateStatusType = {
+    resultCode: number
+    messages: string[]
+    data: {}
+}
+
+// type AuthLoginType = {
+//     email: string
+//     password: string
+//     rememberMe: boolean
+// }
+
+
+export const profileApi = {
+    getProfile(userIdNew: string) {
+        return innstance.get<GetProfileType>(`profile/${userIdNew}`)
+    },
+    getStatus(userIdNew: string) {
+        return innstance.get<string>(`profile/status/${userIdNew}`)
+    },
+    updateStstus(status: string) {
+        return innstance.put<UpdateStatusType>(`profile/status`, { status })
+    }
+}
 
 export const authApi = {
     getMe() {
         return innstance.get<ResponseAuthType>(`auth/me`)
+    },
+    loginAuth(data: LoginType) {
+        return innstance.post('auth/login', data)
+    },
+    logOut() {
+        return innstance.delete('auth/login')
     }
 }
